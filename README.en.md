@@ -8,6 +8,7 @@
 
 ![lang](https://img.shields.io/badge/lang-ko%20%7C%20en%20%7C%20zh-0ea5e9)
 [![license](https://img.shields.io/badge/license-MIT-a855f7)](LICENSE)
+[![release](https://img.shields.io/github/v/release/GarnetRapture/SimpleEngineering?color=22c55e)](https://github.com/GarnetRapture/SimpleEngineering/releases/latest)
 ![type](https://img.shields.io/badge/type-template%20%2B%20CLI-7c3aed)
 ![CLI](https://img.shields.io/badge/CLI-Go%201.26-00ADD8?logo=go&logoColor=white)
 ![hooks](https://img.shields.io/badge/hooks-Node.js-5FA04E?logo=nodedotjs&logoColor=white)
@@ -34,6 +35,8 @@
 ![PHP](https://img.shields.io/badge/PHP-phpstan-777BB4?logo=php&logoColor=white)
 
 [한국어](README.md) · **English** · [简体中文](README.zh-CN.md)
+
+[![DOWNLOAD](https://img.shields.io/badge/CLI-DOWNLOAD-22c55e?style=for-the-badge&logo=github&logoColor=white)](#download)
 
 [![START](https://img.shields.io/badge/DOCS-START-8A2BE2?style=for-the-badge&logo=markdown&logoColor=white)](docs/getting-started.md)
 [![ENVIRONMENT](https://img.shields.io/badge/DOCS-ENVIRONMENT-7c3aed?style=for-the-badge&logo=markdown&logoColor=white)](docs/environment.md)
@@ -74,9 +77,63 @@ The rules run through the official hook contracts of Claude Code and Codex. A ho
 | End of answer | **Blocks** unloaded mandatory skills, forbidden judgments, citations of nonexistent clauses or files, missing response fields or evidence, and guesses; keeps work going while checks remain |
 | Commit | `.githooks/pre-commit` stops a commit containing blocked extensions with exit 1 |
 
-## Quick start
+## Download
 
-Requirements: [Go](https://go.dev/dl/) (runs the CLI), [Node.js](https://nodejs.org) (runs the hooks), [Git](https://git-scm.com/downloads), and Claude Code or Codex.
+No Go installation is needed. Get the one executable that matches your computer from the [latest release](https://github.com/GarnetRapture/SimpleEngineering/releases/latest).
+
+| OS | CPU | File |
+| --- | --- | --- |
+| Windows | x64 (Intel · AMD) | [simpleharness-windows-amd64.exe](https://github.com/GarnetRapture/SimpleEngineering/releases/latest/download/simpleharness-windows-amd64.exe) |
+| Windows | ARM64 | [simpleharness-windows-arm64.exe](https://github.com/GarnetRapture/SimpleEngineering/releases/latest/download/simpleharness-windows-arm64.exe) |
+| macOS | Apple Silicon (M1 and later) | [simpleharness-darwin-arm64](https://github.com/GarnetRapture/SimpleEngineering/releases/latest/download/simpleharness-darwin-arm64) |
+| macOS | Intel | [simpleharness-darwin-amd64](https://github.com/GarnetRapture/SimpleEngineering/releases/latest/download/simpleharness-darwin-amd64) |
+| Linux | x64 | [simpleharness-linux-amd64](https://github.com/GarnetRapture/SimpleEngineering/releases/latest/download/simpleharness-linux-amd64) |
+| Linux | ARM64 | [simpleharness-linux-arm64](https://github.com/GarnetRapture/SimpleEngineering/releases/latest/download/simpleharness-linux-arm64) |
+| Checksums | — | [SHA256SUMS.txt](https://github.com/GarnetRapture/SimpleEngineering/releases/latest/download/SHA256SUMS.txt) |
+
+Which CPU: Windows PowerShell `$env:PROCESSOR_ARCHITECTURE` (`AMD64` → amd64, `ARM64` → arm64); macOS and Linux `uname -m` (`x86_64` → amd64, `arm64` or `aarch64` → arm64).
+
+### Run
+
+Put the executable in the folder where the result should go, open a terminal there, and run it. `output/<project name>/` and `output/<project name>-SETUP.md` appear in that folder.
+
+**Windows** (PowerShell 7 or Windows Terminal)
+
+```powershell
+.\simpleharness-windows-amd64.exe
+```
+
+- Double-clicking it in Explorer also works. The window closes when it finishes, and the result and the guide stay in `output/` next to the executable.
+- The executable is unsigned; if a "Windows protected your PC" window appears, choose **More info → Run anyway**.
+
+**macOS**
+
+```sh
+chmod +x simpleharness-darwin-arm64
+xattr -d com.apple.quarantine simpleharness-darwin-arm64
+./simpleharness-darwin-arm64
+```
+
+A file downloaded through a browser carries the quarantine attribute, and Gatekeeper blocks it; `xattr -d` removes that attribute.
+
+**Linux**
+
+```sh
+chmod +x simpleharness-linux-amd64
+./simpleharness-linux-amd64
+```
+
+**Checksum** — the value must equal the one in `SHA256SUMS.txt`.
+
+| OS | Command |
+| --- | --- |
+| Windows | `Get-FileHash .\simpleharness-windows-amd64.exe -Algorithm SHA256` |
+| macOS | `shasum -a 256 simpleharness-darwin-arm64` |
+| Linux | `sha256sum -c SHA256SUMS.txt --ignore-missing` |
+
+### Run from source
+
+With [Go](https://go.dev/dl/) 1.26 or later you can run it straight from the repository or build it yourself.
 
 ```sh
 git clone https://github.com/GarnetRapture/SimpleEngineering.git
@@ -84,7 +141,24 @@ cd SimpleEngineering
 go run ./src
 ```
 
-The CLI asks, in order:
+Build: Windows `go build -o simpleharness.exe ./src`, macOS and Linux `go build -o simpleharness ./src`.
+
+### Making a release (maintainers)
+
+Pushing a tag that starts with `v` runs [release.yml](.github/workflows/release.yml): after `gofmt` and `go vet` it builds the six executables and `SHA256SUMS.txt` and publishes them as a GitHub release.
+
+```sh
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+The Windows executable icon is linked from `src/rsrc_windows_amd64.syso` and `src/rsrc_windows_arm64.syso`. After changing the icon (`src/assets/launcher.ico`) or the resource script (`src/assets/launcher.rc`), run `src/assets/build_windows_resources.ps1` on Windows to regenerate both files and commit them together (requires GNU windres).
+
+## Quick start
+
+Requirements: [Node.js](https://nodejs.org) (runs the hooks), [Git](https://git-scm.com/downloads), and Claude Code or Codex.
+
+Run the [downloaded](#download) executable (or [run from source](#run-from-source)) in the folder where the result should go; the CLI asks, in order:
 
 1. **Output language** — 한국어 · English · 简体中文
 2. **Environment check** — detects Windows 10/11 · macOS · Linux · WSL and walks through replacing the shell (PowerShell 7 / Git Bash), installing Git, and changing the default terminal
@@ -164,8 +238,13 @@ Subagents are **read-only** helpers the main agent runs with `node .harness/suba
 ```text
 SimpleEngineering/
 ├─ go.mod                  module simpleharness (go 1.26)
+├─ .github/
+│  ├─ workflows/release.yml tag push → build the six executables and publish the release
+│  └─ release-notes.md     release body
 ├─ src/
 │  ├─ main.go              embeds the template and runs the wizard
+│  ├─ rsrc_windows_*.syso  Windows executable icon resources (amd64, arm64)
+│  ├─ assets/              launcher.ico, launcher.rc, build_windows_resources.ps1
 │  ├─ internal/
 │  │  ├─ wizard/           question flow, environment guidance, next steps
 │  │  ├─ system/           OS, Windows build, package manager, MSVC detection

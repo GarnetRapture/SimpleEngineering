@@ -52,18 +52,25 @@ AI 코딩 에이전트(Claude Code, Codex)는 한 세션이 끝나면 그 세션
 
 | 도구 | 쓰임 | 설치 안내 |
 | --- | --- | --- |
-| Go | SimpleHarness CLI 실행 (`go.mod`: `go 1.26`) | [환경 준비](environment.md#5-도구-설치-명령) |
+| SimpleHarness CLI | 질문에 답해 하네스를 생성하는 실행 파일 | [README 다운로드](../README.md#다운로드) (소스에서 실행하려면 Go 1.26 이상) |
 | Git | 저장소 관리, 커밋 가드 | [환경 준비](environment.md) |
 | Node.js | 생성되는 훅·커밋 가드·서브 에이전트 실행기가 Node.js로 실행됨 | [환경 준비](environment.md#5-도구-설치-명령) |
 | Claude Code 또는 Codex | 메인 에이전트 | [에이전트별 적용](agents.md) |
 
 ### 3.2 CLI 실행
 
-이 저장소를 내려받은 폴더(루트)에서 실행해요.
+[README 다운로드](../README.md#다운로드)에서 내 운영체제·CPU에 맞는 실행 파일을 받아, 결과물을 모을 폴더에서 터미널을 열고 실행해요.
+
+```powershell
+.\simpleharness-windows-amd64.exe
+```
 
 ```sh
-go run ./src
+./simpleharness-darwin-arm64     # macOS (먼저 chmod +x, xattr -d com.apple.quarantine)
+./simpleharness-linux-amd64      # Linux (먼저 chmod +x)
 ```
+
+Go가 설치돼 있으면 이 저장소 루트에서 `go run ./src` 로 실행해도 같아요.
 
 CLI는 순서대로 물어봐요.
 

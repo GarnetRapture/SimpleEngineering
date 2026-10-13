@@ -8,6 +8,7 @@
 
 ![lang](https://img.shields.io/badge/lang-ko%20%7C%20en%20%7C%20zh-0ea5e9)
 [![license](https://img.shields.io/badge/license-MIT-a855f7)](LICENSE)
+[![release](https://img.shields.io/github/v/release/GarnetRapture/SimpleEngineering?color=22c55e)](https://github.com/GarnetRapture/SimpleEngineering/releases/latest)
 ![type](https://img.shields.io/badge/type-template%20%2B%20CLI-7c3aed)
 ![CLI](https://img.shields.io/badge/CLI-Go%201.26-00ADD8?logo=go&logoColor=white)
 ![hooks](https://img.shields.io/badge/hooks-Node.js-5FA04E?logo=nodedotjs&logoColor=white)
@@ -34,6 +35,8 @@
 ![PHP](https://img.shields.io/badge/PHP-phpstan-777BB4?logo=php&logoColor=white)
 
 **한국어** · [English](README.en.md) · [简体中文](README.zh-CN.md)
+
+[![DOWNLOAD](https://img.shields.io/badge/CLI-DOWNLOAD-22c55e?style=for-the-badge&logo=github&logoColor=white)](#다운로드)
 
 [![START](https://img.shields.io/badge/DOCS-START-8A2BE2?style=for-the-badge&logo=markdown&logoColor=white)](docs/getting-started.md)
 [![ENVIRONMENT](https://img.shields.io/badge/DOCS-ENVIRONMENT-7c3aed?style=for-the-badge&logo=markdown&logoColor=white)](docs/environment.md)
@@ -74,9 +77,63 @@ AI 코딩 에이전트는 세션이 끝나면 그 세션에서 배운 규칙을 
 
 자세한 판정 순서와 시험 방법은 [훅 설정](docs/hooks.md)에 있어요.
 
-## 빠른 시작
+## 다운로드
 
-준비물: [Go](https://go.dev/dl/) (CLI 실행), [Node.js](https://nodejs.org) (훅 실행), [Git](https://git-scm.com/downloads), Claude Code 또는 Codex. 운영체제별 설치는 [환경 준비](docs/environment.md)를 보세요.
+Go를 설치하지 않아도 돼요. [최신 릴리즈](https://github.com/GarnetRapture/SimpleEngineering/releases/latest)에서 내 컴퓨터에 맞는 실행 파일 하나를 받아요.
+
+| 운영체제 | CPU | 파일 |
+| --- | --- | --- |
+| Windows | x64 (Intel·AMD) | [simpleharness-windows-amd64.exe](https://github.com/GarnetRapture/SimpleEngineering/releases/latest/download/simpleharness-windows-amd64.exe) |
+| Windows | ARM64 | [simpleharness-windows-arm64.exe](https://github.com/GarnetRapture/SimpleEngineering/releases/latest/download/simpleharness-windows-arm64.exe) |
+| macOS | Apple Silicon (M1 이후) | [simpleharness-darwin-arm64](https://github.com/GarnetRapture/SimpleEngineering/releases/latest/download/simpleharness-darwin-arm64) |
+| macOS | Intel | [simpleharness-darwin-amd64](https://github.com/GarnetRapture/SimpleEngineering/releases/latest/download/simpleharness-darwin-amd64) |
+| Linux | x64 | [simpleharness-linux-amd64](https://github.com/GarnetRapture/SimpleEngineering/releases/latest/download/simpleharness-linux-amd64) |
+| Linux | ARM64 | [simpleharness-linux-arm64](https://github.com/GarnetRapture/SimpleEngineering/releases/latest/download/simpleharness-linux-arm64) |
+| 체크섬 | — | [SHA256SUMS.txt](https://github.com/GarnetRapture/SimpleEngineering/releases/latest/download/SHA256SUMS.txt) |
+
+내 CPU 확인: Windows PowerShell `$env:PROCESSOR_ARCHITECTURE` (`AMD64` → amd64, `ARM64` → arm64), macOS·Linux `uname -m` (`x86_64` → amd64, `arm64`·`aarch64` → arm64).
+
+### 실행
+
+결과물을 모을 폴더에 실행 파일을 두고, 그 폴더에서 터미널을 열어 실행해요. 같은 폴더에 `output/<프로젝트 이름>/` 과 `output/<프로젝트 이름>-SETUP.md` 가 생겨요.
+
+**Windows** (PowerShell 7 또는 Windows Terminal)
+
+```powershell
+.\simpleharness-windows-amd64.exe
+```
+
+- 탐색기에서 더블클릭해도 실행돼요. 끝나면 창이 닫히지만 결과물과 안내 파일은 실행 파일 옆 `output/` 에 남아요.
+- 서명되지 않은 실행 파일이라 "Windows의 PC 보호" 창이 뜨면 **추가 정보 → 실행** 을 눌러요.
+
+**macOS**
+
+```sh
+chmod +x simpleharness-darwin-arm64
+xattr -d com.apple.quarantine simpleharness-darwin-arm64
+./simpleharness-darwin-arm64
+```
+
+브라우저로 받은 파일에는 격리(quarantine) 속성이 붙어서 Gatekeeper가 실행을 막아요. `xattr -d` 로 그 속성을 지워요.
+
+**Linux**
+
+```sh
+chmod +x simpleharness-linux-amd64
+./simpleharness-linux-amd64
+```
+
+**체크섬 확인** — 아래 값이 `SHA256SUMS.txt` 의 값과 같아야 해요.
+
+| 운영체제 | 명령 |
+| --- | --- |
+| Windows | `Get-FileHash .\simpleharness-windows-amd64.exe -Algorithm SHA256` |
+| macOS | `shasum -a 256 simpleharness-darwin-arm64` |
+| Linux | `sha256sum -c SHA256SUMS.txt --ignore-missing` |
+
+### 소스에서 실행
+
+[Go](https://go.dev/dl/) 1.26 이상이 있으면 저장소에서 바로 실행하거나 직접 빌드할 수 있어요.
 
 ```sh
 git clone https://github.com/GarnetRapture/SimpleEngineering.git
@@ -84,7 +141,24 @@ cd SimpleEngineering
 go run ./src
 ```
 
-CLI가 순서대로 물어봐요.
+직접 빌드: Windows `go build -o simpleharness.exe ./src`, macOS·Linux `go build -o simpleharness ./src`.
+
+### 릴리즈 만들기 (관리자)
+
+`v` 로 시작하는 태그를 푸시하면 [release.yml](.github/workflows/release.yml) 이 `gofmt`·`go vet` 검사 후 6개 실행 파일과 `SHA256SUMS.txt` 를 빌드해 GitHub 릴리즈에 올려요.
+
+```sh
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+Windows 실행 파일의 아이콘은 `src/rsrc_windows_amd64.syso`·`src/rsrc_windows_arm64.syso` 로 링크돼요. 아이콘(`src/assets/launcher.ico`)이나 리소스 스크립트(`src/assets/launcher.rc`)를 바꾸면 Windows에서 `src/assets/build_windows_resources.ps1` 을 실행해 두 파일을 다시 만들고 함께 커밋해요(GNU windres 필요).
+
+## 빠른 시작
+
+준비물: [Node.js](https://nodejs.org) (훅 실행), [Git](https://git-scm.com/downloads), Claude Code 또는 Codex. 운영체제별 설치는 [환경 준비](docs/environment.md)를 보세요.
+
+[다운로드](#다운로드)한 실행 파일(또는 [소스에서 실행](#소스에서-실행))을 결과물을 모을 폴더에서 실행하면 CLI가 순서대로 물어봐요.
 
 1. **출력 언어** — 한국어 · English · 简体中文
 2. **환경 점검** — Windows 10/11 · macOS · Linux · WSL을 감지해 셸 교체(PowerShell 7 / Git Bash), Git 설치, 기본 터미널 변경을 단계별로 안내
@@ -164,8 +238,13 @@ CLI가 순서대로 물어봐요.
 ```text
 SimpleEngineering/
 ├─ go.mod                  module simpleharness (go 1.26)
+├─ .github/
+│  ├─ workflows/release.yml 태그 푸시 → 6개 실행 파일 빌드·릴리즈 게시
+│  └─ release-notes.md     릴리즈 본문
 ├─ src/
 │  ├─ main.go              템플릿 임베드 + 마법사 실행
+│  ├─ rsrc_windows_*.syso  Windows 실행 파일 아이콘 리소스 (amd64·arm64)
+│  ├─ assets/              launcher.ico, launcher.rc, build_windows_resources.ps1
 │  ├─ internal/
 │  │  ├─ wizard/           질문 흐름·환경 안내·다음 단계
 │  │  ├─ system/           운영체제·Windows 빌드·패키지 매니저·MSVC 감지

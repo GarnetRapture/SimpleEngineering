@@ -133,7 +133,7 @@ CLI의 "추천 도구" 단계가 아래 명령으로 설치해요. Windows는 `w
 | ripgrep | 빠른 코드 검색 | `--id BurntSushi.ripgrep.MSVC -e` | `ripgrep` | `ripgrep` |
 | SQLite | 파일 DB 조회 (인자로 SQL) | `--id SQLite.SQLite -e` | `sqlite` | `sqlite3` |
 | DuckDB | CSV·JSON·Parquet 분석 SQL (인자로 SQL) | `--id DuckDB.cli -e` | `duckdb` | `curl https://install.duckdb.org \| sh` |
-| Go | Go 툴체인 (SimpleHarness CLI 실행에도 필요) | `--id GoLang.Go -e` | `go` | `golang-go` |
+| Go | Go 툴체인 (SimpleHarness CLI를 소스에서 실행할 때 필요) | `--id GoLang.Go -e` | `go` | `golang-go` |
 | Python 3.14 | Python 런타임 | `--id Python.Python.3.14 -e` | `python@3.14` | `python3` |
 | uv | Python 패키지·환경 관리 | `--id astral-sh.uv -e` | `uv` | `curl -LsSf https://astral.sh/uv/install.sh \| sh` |
 | Rustup | Rust 툴체인 | `--id Rustlang.Rustup -e` | `rustup` | `rustup` |

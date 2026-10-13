@@ -8,6 +8,7 @@
 
 ![lang](https://img.shields.io/badge/lang-ko%20%7C%20en%20%7C%20zh-0ea5e9)
 [![license](https://img.shields.io/badge/license-MIT-a855f7)](LICENSE)
+[![release](https://img.shields.io/github/v/release/GarnetRapture/SimpleEngineering?color=22c55e)](https://github.com/GarnetRapture/SimpleEngineering/releases/latest)
 ![type](https://img.shields.io/badge/type-template%20%2B%20CLI-7c3aed)
 ![CLI](https://img.shields.io/badge/CLI-Go%201.26-00ADD8?logo=go&logoColor=white)
 ![hooks](https://img.shields.io/badge/hooks-Node.js-5FA04E?logo=nodedotjs&logoColor=white)
@@ -34,6 +35,8 @@
 ![PHP](https://img.shields.io/badge/PHP-phpstan-777BB4?logo=php&logoColor=white)
 
 [한국어](README.md) · [English](README.en.md) · **简体中文**
+
+[![DOWNLOAD](https://img.shields.io/badge/CLI-DOWNLOAD-22c55e?style=for-the-badge&logo=github&logoColor=white)](#下载)
 
 [![START](https://img.shields.io/badge/DOCS-START-8A2BE2?style=for-the-badge&logo=markdown&logoColor=white)](docs/getting-started.md)
 [![ENVIRONMENT](https://img.shields.io/badge/DOCS-ENVIRONMENT-7c3aed?style=for-the-badge&logo=markdown&logoColor=white)](docs/environment.md)
@@ -74,9 +77,63 @@ AI 编码代理在会话结束后会忘记该会话中学到的规则，文档�
 | 回复结束 | **拦截**未加载必需技能、禁止的判断用语、引用不存在的条款或文件、缺少回复字段或依据、推测表达；仍有待完成检查时让工作继续 |
 | 提交 | `.githooks/pre-commit` 以退出码 1 停止包含被拦截扩展名文件的提交 |
 
-## 快速开始
+## 下载
 
-准备：[Go](https://go.dev/dl/)（运行 CLI）、[Node.js](https://nodejs.org)（运行钩子）、[Git](https://git-scm.com/downloads)，以及 Claude Code 或 Codex。
+无需安装 Go。从[最新发布](https://github.com/GarnetRapture/SimpleEngineering/releases/latest)下载适合你电脑的一个可执行文件。
+
+| 操作系统 | CPU | 文件 |
+| --- | --- | --- |
+| Windows | x64（Intel · AMD） | [simpleharness-windows-amd64.exe](https://github.com/GarnetRapture/SimpleEngineering/releases/latest/download/simpleharness-windows-amd64.exe) |
+| Windows | ARM64 | [simpleharness-windows-arm64.exe](https://github.com/GarnetRapture/SimpleEngineering/releases/latest/download/simpleharness-windows-arm64.exe) |
+| macOS | Apple Silicon（M1 及以后） | [simpleharness-darwin-arm64](https://github.com/GarnetRapture/SimpleEngineering/releases/latest/download/simpleharness-darwin-arm64) |
+| macOS | Intel | [simpleharness-darwin-amd64](https://github.com/GarnetRapture/SimpleEngineering/releases/latest/download/simpleharness-darwin-amd64) |
+| Linux | x64 | [simpleharness-linux-amd64](https://github.com/GarnetRapture/SimpleEngineering/releases/latest/download/simpleharness-linux-amd64) |
+| Linux | ARM64 | [simpleharness-linux-arm64](https://github.com/GarnetRapture/SimpleEngineering/releases/latest/download/simpleharness-linux-arm64) |
+| 校验和 | — | [SHA256SUMS.txt](https://github.com/GarnetRapture/SimpleEngineering/releases/latest/download/SHA256SUMS.txt) |
+
+查看 CPU：Windows PowerShell `$env:PROCESSOR_ARCHITECTURE`（`AMD64` → amd64，`ARM64` → arm64）；macOS 与 Linux `uname -m`（`x86_64` → amd64，`arm64` 或 `aarch64` → arm64）。
+
+### 运行
+
+把可执行文件放到希望生成结果的文件夹中，在该文件夹打开终端运行。该文件夹中会生成 `output/<项目名称>/` 与 `output/<项目名称>-SETUP.md`。
+
+**Windows**（PowerShell 7 或 Windows Terminal）
+
+```powershell
+.\simpleharness-windows-amd64.exe
+```
+
+- 在资源管理器中双击也可以运行。结束后窗口会关闭，结果与指南保留在可执行文件旁的 `output/` 中。
+- 该可执行文件未签名；如果出现“Windows 已保护你的电脑”窗口，点击**更多信息 → 仍要运行**。
+
+**macOS**
+
+```sh
+chmod +x simpleharness-darwin-arm64
+xattr -d com.apple.quarantine simpleharness-darwin-arm64
+./simpleharness-darwin-arm64
+```
+
+通过浏览器下载的文件带有隔离（quarantine）属性，Gatekeeper 会阻止运行；`xattr -d` 会移除该属性。
+
+**Linux**
+
+```sh
+chmod +x simpleharness-linux-amd64
+./simpleharness-linux-amd64
+```
+
+**校验和确认** — 结果应与 `SHA256SUMS.txt` 中的值一致。
+
+| 操作系统 | 命令 |
+| --- | --- |
+| Windows | `Get-FileHash .\simpleharness-windows-amd64.exe -Algorithm SHA256` |
+| macOS | `shasum -a 256 simpleharness-darwin-arm64` |
+| Linux | `sha256sum -c SHA256SUMS.txt --ignore-missing` |
+
+### 从源码运行
+
+安装了 [Go](https://go.dev/dl/) 1.26 或更高版本时，可以直接在仓库中运行或自行构建。
 
 ```sh
 git clone https://github.com/GarnetRapture/SimpleEngineering.git
@@ -84,7 +141,24 @@ cd SimpleEngineering
 go run ./src
 ```
 
-CLI 依次询问：
+构建：Windows `go build -o simpleharness.exe ./src`，macOS 与 Linux `go build -o simpleharness ./src`。
+
+### 发布（维护者）
+
+推送以 `v` 开头的标签后，[release.yml](.github/workflows/release.yml) 会在 `gofmt` 与 `go vet` 检查后构建 6 个可执行文件和 `SHA256SUMS.txt`，并发布为 GitHub Release。
+
+```sh
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+Windows 可执行文件的图标通过 `src/rsrc_windows_amd64.syso` 与 `src/rsrc_windows_arm64.syso` 链接。修改图标（`src/assets/launcher.ico`）或资源脚本（`src/assets/launcher.rc`）后，在 Windows 上运行 `src/assets/build_windows_resources.ps1` 重新生成这两个文件并一起提交（需要 GNU windres）。
+
+## 快速开始
+
+准备：[Node.js](https://nodejs.org)（运行钩子）、[Git](https://git-scm.com/downloads)，以及 Claude Code 或 Codex。
+
+在希望生成结果的文件夹中运行[下载](#下载)的可执行文件（或[从源码运行](#从源码运行)），CLI 依次询问：
 
 1. **输出语言** — 한국어 · English · 简体中文
 2. **环境检查** — 识别 Windows 10/11 · macOS · Linux · WSL，逐步引导替换 shell（PowerShell 7 / Git Bash）、安装 Git、更改默认终端
@@ -164,8 +238,13 @@ CLI 依次询问：
 ```text
 SimpleEngineering/
 ├─ go.mod                  module simpleharness（go 1.26）
+├─ .github/
+│  ├─ workflows/release.yml 推送标签 → 构建 6 个可执行文件并发布
+│  └─ release-notes.md     发布说明
 ├─ src/
 │  ├─ main.go              嵌入模板并运行向导
+│  ├─ rsrc_windows_*.syso  Windows 可执行文件图标资源（amd64、arm64）
+│  ├─ assets/              launcher.ico、launcher.rc、build_windows_resources.ps1
 │  ├─ internal/
 │  │  ├─ wizard/           提问流程、环境引导、后续步骤
 │  │  ├─ system/           操作系统、Windows 版本号、包管理器、MSVC 检测
