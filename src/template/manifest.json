@@ -1,0 +1,25 @@
+{
+  "files": [
+    { "id": "agents", "source": "entry/agents-contract.template.md", "target": "AGENTS.md", "render": true, "executable": false },
+    { "id": "claude", "source": "entry/claude-entry.template.md", "target": "CLAUDE.md", "render": true, "executable": false, "harness": "claude" },
+    { "id": "conventions", "source": "docs/{{output.language}}/conventions.md", "target": "{{paths.conventions}}", "render": true, "executable": false },
+    { "id": "patterns", "source": "docs/agent-patterns.md", "target": "{{paths.patterns}}", "render": true, "executable": false },
+    { "id": "tracking", "source": "docs/{{output.language}}/ai-tracking.md", "target": "{{paths.tracking}}", "render": true, "executable": false },
+    { "id": "audit", "source": "docs/{{output.language}}/session-audit.md", "target": "{{paths.audit}}", "render": true, "executable": false },
+    { "id": "feedback", "source": "docs/{{output.language}}/user-feedback.md", "target": "{{paths.feedback}}", "render": true, "executable": false },
+    { "id": "workflowSkill", "source": "skills/workflow/SKILL.md", "target": "{{skills.root}}/{{skills.prefix}}-workflow/SKILL.md", "render": true, "executable": false },
+    { "id": "fixSkill", "source": "skills/fix-process/SKILL.md", "target": "{{skills.root}}/{{skills.prefix}}-fix-process/SKILL.md", "render": true, "executable": false },
+    { "id": "verifySkill", "source": "skills/verify/SKILL.md", "target": "{{skills.root}}/{{skills.prefix}}-verify/SKILL.md", "render": true, "executable": false },
+    { "id": "verifyReference", "source": "skills/verify/logic-judgment.md", "target": "{{skills.root}}/{{skills.prefix}}-verify/reference/logic-judgment.md", "render": true, "executable": false },
+    { "id": "structureSkill", "source": "skills/structure/SKILL.md", "target": "{{skills.root}}/{{skills.prefix}}-structure/SKILL.md", "render": true, "executable": false },
+    { "id": "stackSkill", "source": "skills/stack/SKILL.md", "target": "{{skills.root}}/{{skills.prefix}}-stack/SKILL.md", "render": true, "executable": false },
+    { "id": "mcpSkill", "source": "skills/mcp/SKILL.md", "target": "{{skills.root}}/{{skills.prefix}}-mcp/SKILL.md", "render": true, "executable": false },
+    { "id": "namingSkill", "source": "skills/naming/SKILL.md", "target": "{{skills.root}}/{{skills.prefix}}-naming/SKILL.md", "render": true, "executable": false, "requires": "naming" },
+    { "id": "inlineSkill", "source": "skills/inline/SKILL.md", "target": "{{skills.root}}/{{skills.prefix}}-inline/SKILL.md", "render": true, "executable": false, "requires": "inline" },
+    { "id": "subagentSkill", "source": "skills/subagent/SKILL.md", "target": "{{skills.root}}/{{skills.prefix}}-subagent/SKILL.md", "render": true, "executable": false, "requires": "subagents" },
+    { "id": "hook", "source": "hooks/run_project_hook.mjs", "target": "{{paths.hook}}", "render": false, "executable": false },
+    { "id": "subagentLauncher", "source": "subagents/run_subagent.mjs", "target": "{{paths.subagentLauncher}}", "render": false, "executable": false, "requires": "subagents" },
+    { "id": "preCommit", "source": "git/pre-commit", "target": ".githooks/pre-commit", "render": true, "executable": true },
+    { "id": "commitGuard", "source": "git/staged_guard.mjs", "target": "{{paths.commitGuard}}", "render": false, "executable": false }
+  ]
+}

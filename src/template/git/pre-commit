@@ -1,0 +1,5 @@
+#!/bin/sh
+if [ -f "$(git rev-parse --git-path MERGE_HEAD)" ]; then
+	exit 0
+fi
+exec node "{{paths.commitGuard}}"
